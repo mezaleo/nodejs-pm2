@@ -4,6 +4,11 @@ https://github.com/mezaleo/nodejs-pm2.git
 
 
 ## Setup
+
+Instalar npm
+```sh
+apk add --update nodejs npm
+```
 Mover a directorio jwt-service
 ```sh
 cd jwt-service
