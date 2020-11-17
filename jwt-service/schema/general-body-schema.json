@@ -1,0 +1,17 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "General Body Schema",
+  "required": [
+    "msg"
+  ],
+  "properties": {
+    "msg": {
+      "type": "string",
+      "title": "msg",
+      "minLength": 3,
+      "maxLength": 50
+    }
+  }
+}

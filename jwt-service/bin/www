@@ -1,0 +1,131 @@
+#!/usr/bin/env node
+
+/**
+* Module dependencies.
+*/
+const ENV = require('../config/' + (process.env.NODE_ENV || 'development').toString());
+const app = require('../app');
+const http = require('http');
+const common = require('../utils/common');
+
+/**
+* Get port from environment and store in Express.
+*/
+
+const port = normalizePort(ENV.PORT);
+app.set('port', port);
+
+/**
+* Graceful Shutdown
+*/
+
+function gracefulShutdown() {
+  console.error(common.logFormat('Shutting down gracefully'));
+  console.error(common.logFormat('Server NOT accepting new connections and keeping existing connections ON'));
+  server.close(function() {
+    console.error(common.logFormat('HTTP server closed'));
+    return process.exit(0);
+  });
+
+  setTimeout(function() {
+    console.error(common.logFormat('Could not close connections in time, forcefully shutting down'));
+    return process.exit(1);
+  }, ENV.GRACEFUL_SHUTDOWN_TIMEOUT);
+}
+
+process.on('SIGTERM', () => {
+  console.error(common.logFormat('SIGTERM signal received: closing HTTP server'));
+  return gracefulShutdown();
+});
+
+process.on('SIGINT', () => {
+  console.error(common.logFormat('SIGINT signal received: closing HTTP server'));
+  return gracefulShutdown();
+});
+
+process.on('uncaughtException', function(err) {
+  console.error(common.logFormat('[Uncaught Exception Event]: %s', err.stack || err.message));
+  return gracefulShutdown();
+});
+
+process.on('unhandledRejection', function(reason, p) {
+  console.error(common.logFormat('[Unhandled Rejection Event]: ' + (reason.stack || reason.message)));
+  console.error(common.logFormat('[Unhandled Rejection Event]: Promise: ' + p));
+  return gracefulShutdown();
+});
+
+
+/**
+* Normalize a port into a number, string, or false.
+*/
+
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+// named pipe
+return val;
+}
+
+if (port >= 0) {
+// port number
+return port;
+}
+
+return false;
+}
+
+/**
+* Event listener for HTTP server "error" event.
+*/
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  const bind = typeof port === 'string'
+  ? 'Pipe ' + port
+  : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+    console.error(common.logFormat(bind + ' requires elevated privileges'));
+    return;
+    break;
+    case 'EADDRINUSE':
+    console.error(common.logFormat(bind + ' is already in use'));
+    return;
+    break;
+    default:
+    console.error(common.logFormat('Default error: ' + error));
+    return;
+  }
+}
+
+/**
+* Event listener for HTTP server "listening" event.
+*/
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  console.log(common.logFormat('Listening on ' + bind));
+}
+
+
+/**
+* Create HTTP server.
+*/
+
+const server = http.createServer(app);
+
+
+/**
+* Listen on provided port, on all network interfaces.
+*/
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);

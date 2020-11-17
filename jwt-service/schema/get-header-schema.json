@@ -1,0 +1,17 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "GET Header Schema",
+  "required": [
+    "authorization"
+  ],
+  "properties": {
+    "authorization": {
+      "type": "string",
+      "title": "authorization",
+      "pattern": "Bearer (.*)",
+      "minLength": 10
+    }
+  }
+}

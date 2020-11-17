@@ -1,0 +1,22 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "POST Header Schema",
+  "required": [
+    "rutafiliado",
+    "canal"
+  ],
+  "properties": {
+    "rutafiliado": {
+      "type": "string",
+      "title": "rutafiliado",
+      "minLength": 2
+    },
+    "canal": {
+      "type": "string",
+      "title": "canal",
+      "minLength": 2
+    }
+  }
+}
