@@ -1,6 +1,6 @@
 const ENV = {
 	CONTEXT_PATH:'/v1/jwt',
-	PORT: 7100,
+	PORT: 8080,
 	TIMEZONE: 'Chile/Continental',
 	TIME_FORMAT: 'YYYY-MM-DD--HH:mm:ss.SSS',
 	GRACEFUL_SHUTDOWN_TIMEOUT: 10000,

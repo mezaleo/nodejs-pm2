@@ -1,0 +1,6 @@
+version: '3'
+services:
+  jwt-service:
+    build: ./jwt-service
+    ports:
+      - "8080:8080"
