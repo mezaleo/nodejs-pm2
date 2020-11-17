@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "77897c79-d867-4040-870d-e4a51ee38ce8",
+		"name": "nodejs-pm2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener jwt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "rutafiliado",
+						"type": "text",
+						"value": "1-9"
+					},
+					{
+						"key": "canal",
+						"type": "text",
+						"value": "dockerlab"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/jwt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"jwt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validar jwt",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJSdXRBZmlsaWFkbyI6IjEtOSIsImlhdCI6MTYwNTYyNjE5NX0.AYFfS5694qBpnvgyAxCMEJbfo5LDRZ_CUeX8S2UMZo8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "rutafiliado",
+						"type": "text",
+						"value": "1-2"
+					},
+					{
+						"key": "canal",
+						"type": "text",
+						"value": "dockerlab"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/jwt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"jwt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/jwt/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"jwt",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
